@@ -39,13 +39,17 @@ jobs:
       # --------------------------
       - name: Sync Content Files to Hexo Source
         run: |
+          echo "🛠️ 正在创建 Hexo 核心目录结构..."
           mkdir -p ./source/_posts/
+          
           echo "🧹 清理旧内容..."
           rm -rf ./source/_posts/*
+          
           echo "📦 同步新内容..."
           rsync -av --delete ./content-source/ ./source/_posts/
-          rm -rf ./content-source/.git
-          echo "✅ 内容同步完成。"
+          
+          echo "✅ 内容同步完成。文章已复制到 ./source/_posts/"
+
 
       # --------------------------
       # 4️⃣ 设置 Node.js 环境
