@@ -1,4 +1,5 @@
 # 文件路径: HachGo/hexo-source/.github/workflows/deploy.yml
+# 目的: 从 Repo A (内容仓库) 同步内容，在 Repo B (源码仓库) 构建，部署到 Repo C (Pages 仓库)
 
 name: Build and Deploy Blog
 
@@ -14,49 +15,56 @@ jobs:
       contents: write # 部署 Action 需要此权限
 
     steps:
+      # 步骤 1: 检出 Hexo 源码仓库 (Repo B)
       - name: Checkout Repo B (Hexo Source)
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
+      # 步骤 2: 检出内容仓库 (Repo A)
       - name: Checkout Repo A (Content)
         uses: actions/checkout@v4
         with:
           repository: HachGo/hexo-blog-content # 您的内容仓库
           path: ./content-source
+          # 注意：此处的 token 依赖于 Repo B 中配置的 DEPLOY_PAT/REPO_B_PAT，必须拥有完整 repo 权限
+          token: ${{ secrets.DEPLOY_PAT }}
 
+      # 步骤 3: 复制内容到 Hexo source 目录
       - name: Copy Content Files to Hexo Source
         run: |
-          # 1. 清空旧的 posts 目录，确保最新内容
+          # 1. 强制创建目标目录，解决 'No such file or directory' 错误
+          mkdir -p ./source/_posts/ 
+          
+          # 2. 清空旧的内容
           rm -rf ./source/_posts/*
-
-          # 2. 复制内容仓库中的所有文件到 Hexo 的 _posts 目录
-          # **注意：请根据您实际文章存放的目录结构进行调整！**
-          # 假设所有文章都在 Repo A 的根目录
+          
+          # 3. 复制 Repo A 的所有内容到 Hexo 的文章目录
           cp -r ./content-source/* ./source/_posts/
-
-          # 3. 清理不需要的 .git 目录
+          
+          # 4. 清理 Git 目录
           rm -rf ./content-source/.git
 
+      # 步骤 4: 设置 Node.js 环境
       - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
+      # 步骤 5: 安装依赖
       - name: Install Dependencies
         # 使用 --legacy-peer-deps 避免在 CI 环境中因 lock file 冲突失败
         run: npm install --legacy-peer-deps
 
+      # 步骤 6: Hexo 清理并生成静态文件
       - name: Clean and Generate Hexo
-        # 使用 npx 执行本地安装的 hexo 命令
         run: npx hexo clean && npx hexo generate
 
-      # 部署到 Repo C (HachGo/HachGo.github.io) 的 main 分支
+      # 步骤 7: 部署到 GitHub Pages (Repo C)
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.DEPLOY_PAT }} # 使用 Repo B 中存储的 PAT
-          # 目标仓库是您的 Pages 仓库 (Repo C)
-          external_repository: HachGo/HachGo.github.io
+          external_repository: HachGo/HachGo.github.io # 目标 Pages 仓库
           publish_branch: main
           publish_dir: ./public
