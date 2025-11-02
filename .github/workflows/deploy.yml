@@ -1,67 +1,55 @@
-# 文件路径: .github/workflows/deploy.yml
-# 功能: 从 Repo A (内容仓库) 同步内容，在 Repo B (源码仓库) 构建，
-#      然后部署到 Repo C (GitHub Pages 仓库)
-
 name: Build and Deploy Blog
 
 on:
   repository_dispatch:
-    types: [docs-updated] # 监听 Repo A 触发的 webhook 信号
-  workflow_dispatch:      # 允许手动运行
+    types: [docs-updated]
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # 允许写入 Repo B，用于部署
+      contents: write
 
     steps:
-      # --------------------------
-      # 1️⃣ 检出当前仓库 (Hexo 源码仓库, Repo B)
-      # --------------------------
+      # 1️⃣ 检出 Hexo 源码仓库 (Repo B)
       - name: Checkout Repo B (Hexo Source)
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # --------------------------
       # 2️⃣ 检出内容仓库 (Repo A)
-      # --------------------------
       - name: Checkout Repo A (Content)
         uses: actions/checkout@v4
         with:
-          repository: HachGo/hexo-blog-content   # 内容仓库
+          repository: HachGo/hexo-blog-content
           path: ./content-source
-          token: ${{ secrets.DEPLOY_PAT_NEW }}   # 必须有 repo 全权限
+          token: ${{ secrets.DEPLOY_PAT_NEW }}
 
-      # --------------------------
       # 3️⃣ 同步内容文件
-      # --------------------------
       - name: Sync Content Files to Hexo Source
         run: |
           echo "🛠️ 正在创建 Hexo 核心目录结构..."
           mkdir -p ./source/_posts/
-          
+
           echo "🧹 清理旧内容..."
           rm -rf ./source/_posts/*
-          
+
           echo "📦 同步新内容..."
-          rsync -av --delete ./content-source/ ./source/_posts/
-          
+          # ✅ 如果内容仓库是直接放 .md 文件在根目录，请用这条命令：
+          rsync -av --include='*.md' --exclude='*' ./content-source/ ./source/_posts/
+
           echo "✅ 内容同步完成。文章已复制到 ./source/_posts/"
+          echo "当前 _posts 内容:"
+          ls -al ./source/_posts/
 
-
-      # --------------------------
       # 4️⃣ 设置 Node.js 环境
-      # --------------------------
       - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      # --------------------------
-      # 5️⃣ 缓存 npm 依赖 (加快构建)
-      # --------------------------
+      # 5️⃣ 缓存 npm 依赖
       - name: Cache npm dependencies
         uses: actions/cache@v4
         with:
@@ -70,28 +58,25 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-node-
 
-      # --------------------------
       # 6️⃣ 安装依赖
-      # --------------------------
       - name: Install Dependencies
         run: npm install --legacy-peer-deps
 
-      # --------------------------
       # 7️⃣ 生成静态文件
-      # --------------------------
       - name: Build Hexo Site
         run: |
+          echo "🧱 开始构建 Hexo 博客..."
           npx hexo clean
           npx hexo generate
+          echo "✅ Hexo 构建完成，生成的文件列表："
+          ls -al ./public || echo "⚠️ 没有生成任何文件，请检查 Hexo 日志"
 
-      # --------------------------
-      # 8️⃣ 部署到 GitHub Pages (Repo C)
-      # --------------------------
+      # 8️⃣ 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
-          personal_token: ${{ secrets.DEPLOY_PAT_NEW }}   # ✅ 修复关键问题：必须放在 with 内
-          external_repository: HachGo/HachGo.github.io     # Pages 仓库
-          publish_branch: main                             # 目标分支
-          publish_dir: ./public                            # Hexo 输出目录
+          personal_token: ${{ secrets.DEPLOY_PAT_NEW }}
+          external_repository: HachGo/HachGo.github.io
+          publish_branch: main
+          publish_dir: ./public
           commit_message: "🚀 Deploy from Hexo build: ${{ github.run_number }}"
