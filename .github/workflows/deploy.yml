@@ -1,74 +1,93 @@
-# 文件路径: HachGo/hexo-source/.github/workflows/deploy.yml
-# 目的: 从 Repo A (内容仓库) 同步内容，在 Repo B (源码仓库) 构建，部署到 Repo C (Pages 仓库)
+# 文件路径: .github/workflows/deploy.yml
+# 功能: 从 Repo A (内容仓库) 同步内容，在 Repo B (源码仓库) 构建，
+#      然后部署到 Repo C (GitHub Pages 仓库)
 
 name: Build and Deploy Blog
 
 on:
   repository_dispatch:
-    types: [docs-updated] # 监听 Repo A 发送的信号
+    types: [docs-updated] # 监听 Repo A 触发的 webhook 信号
   workflow_dispatch:      # 允许手动运行
 
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
-      contents: write # 部署 Action 需要此权限
+      contents: write # 允许写入 Repo B，用于部署
 
     steps:
-      # 步骤 1: 检出 Hexo 源码仓库 (Repo B)
+      # --------------------------
+      # 1️⃣ 检出当前仓库 (Hexo 源码仓库, Repo B)
+      # --------------------------
       - name: Checkout Repo B (Hexo Source)
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      # 步骤 2: 检出内容仓库 (Repo A)
+      # --------------------------
+      # 2️⃣ 检出内容仓库 (Repo A)
+      # --------------------------
       - name: Checkout Repo A (Content)
         uses: actions/checkout@v4
         with:
-          repository: HachGo/hexo-blog-content # 您的内容仓库
+          repository: HachGo/hexo-blog-content   # 内容仓库
           path: ./content-source
-          # 注意：此处的 token 依赖于 Repo B 中配置的 DEPLOY_PAT_NEW/REPO_B_PAT，必须拥有完整 repo 权限
-          token: ${{ secrets.DEPLOY_PAT_NEW }}
+          token: ${{ secrets.DEPLOY_PAT_NEW }}   # 必须有 repo 全权限
 
-      # 步骤 3: 复制内容到 Hexo source 目录
-      - name: Copy Content Files to Hexo Source
+      # --------------------------
+      # 3️⃣ 同步内容文件
+      # --------------------------
+      - name: Sync Content Files to Hexo Source
         run: |
-          # 1. 强制创建目标目录，解决 'No such file or directory' 错误
-          mkdir -p ./source/_posts/ 
-          
-          # 2. 清空旧的内容
+          mkdir -p ./source/_posts/
+          echo "🧹 清理旧内容..."
           rm -rf ./source/_posts/*
-          
-          # 3. 复制 Repo A 的所有内容到 Hexo 的文章目录
-          cp -r ./content-source/* ./source/_posts/
-          
-          # 4. 清理 Git 目录
+          echo "📦 同步新内容..."
+          rsync -av --delete ./content-source/ ./source/_posts/
           rm -rf ./content-source/.git
+          echo "✅ 内容同步完成。"
 
-      # 步骤 4: 设置 Node.js 环境
+      # --------------------------
+      # 4️⃣ 设置 Node.js 环境
+      # --------------------------
       - name: Setup Node.js 20
         uses: actions/setup-node@v4
         with:
           node-version: '20'
 
-      # 步骤 5: 安装依赖
+      # --------------------------
+      # 5️⃣ 缓存 npm 依赖 (加快构建)
+      # --------------------------
+      - name: Cache npm dependencies
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      # --------------------------
+      # 6️⃣ 安装依赖
+      # --------------------------
       - name: Install Dependencies
-        # 使用 --legacy-peer-deps 避免在 CI 环境中因 lock file 冲突失败
         run: npm install --legacy-peer-deps
 
-      # 步骤 6: Hexo 清理并生成静态文件
-      - name: Clean and Generate Hexo
-        run: npx hexo clean && npx hexo generate
+      # --------------------------
+      # 7️⃣ 生成静态文件
+      # --------------------------
+      - name: Build Hexo Site
+        run: |
+          npx hexo clean
+          npx hexo generate
 
-      # 步骤 7: 部署到 GitHub Pages (Repo C)
-      # 部署到 Repo C (HachGo/HachGo.github.io) 的 main 分支
+      # --------------------------
+      # 8️⃣ 部署到 GitHub Pages (Repo C)
+      # --------------------------
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
-        env:
-          # 明确指定 PERSONAL_TOKEN 环境变量，Action 识别后会将其视为 PAT
-          PERSONAL_TOKEN: ${{ secrets.DEPLOY_PAT_NEW }} 
         with:
-          # 注意：这里不再需要 github_token 参数了
-          external_repository: HachGo/HachGo.github.io
-          publish_branch: main
-          publish_dir: ./public
+          personal_token: ${{ secrets.DEPLOY_PAT_NEW }}   # ✅ 修复关键问题：必须放在 with 内
+          external_repository: HachGo/HachGo.github.io     # Pages 仓库
+          publish_branch: main                             # 目标分支
+          publish_dir: ./public                            # Hexo 输出目录
+          commit_message: "🚀 Deploy from Hexo build: ${{ github.run_number }}"
