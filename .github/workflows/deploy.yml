@@ -61,10 +61,14 @@ jobs:
         run: npx hexo clean && npx hexo generate
 
       # 步骤 7: 部署到 GitHub Pages (Repo C)
+      # 部署到 Repo C (HachGo/HachGo.github.io) 的 main 分支
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
+        env:
+          # 明确指定 PERSONAL_TOKEN 环境变量，Action 识别后会将其视为 PAT
+          PERSONAL_TOKEN: ${{ secrets.DEPLOY_PAT }} 
         with:
-          github_token: ${{ secrets.DEPLOY_PAT }} # 使用 Repo B 中存储的 PAT
-          external_repository: HachGo/HachGo.github.io # 目标 Pages 仓库
+          # 注意：这里不再需要 github_token 参数了
+          external_repository: HachGo/HachGo.github.io
           publish_branch: main
           publish_dir: ./public
