@@ -1,0 +1,62 @@
+# 文件路径: HachGo/hexo-source/.github/workflows/deploy.yml
+
+name: Build and Deploy Blog
+
+on:
+  repository_dispatch:
+    types: [docs-updated] # 监听 Repo A 发送的信号
+  workflow_dispatch:      # 允许手动运行
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write # 部署 Action 需要此权限
+
+    steps:
+      - name: Checkout Repo B (Hexo Source)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Checkout Repo A (Content)
+        uses: actions/checkout@v4
+        with:
+          repository: HachGo/blog-content # 您的内容仓库
+          path: ./content-source
+
+      - name: Copy Content Files to Hexo Source
+        run: |
+          # 1. 清空旧的 posts 目录，确保最新内容
+          rm -rf ./source/_posts/*
+
+          # 2. 复制内容仓库中的所有文件到 Hexo 的 _posts 目录
+          # **注意：请根据您实际文章存放的目录结构进行调整！**
+          # 假设所有文章都在 Repo A 的根目录
+          cp -r ./content-source/* ./source/_posts/
+
+          # 3. 清理不需要的 .git 目录
+          rm -rf ./content-source/.git
+
+      - name: Setup Node.js 20
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Dependencies
+        # 使用 --legacy-peer-deps 避免在 CI 环境中因 lock file 冲突失败
+        run: npm install --legacy-peer-deps
+
+      - name: Clean and Generate Hexo
+        # 使用 npx 执行本地安装的 hexo 命令
+        run: npx hexo clean && npx hexo generate
+
+      # 部署到 Repo C (HachGo/HachGo.github.io) 的 main 分支
+      - name: Deploy to GitHub Pages
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.DEPLOY_PAT }} # 使用 Repo B 中存储的 PAT
+          # 目标仓库是您的 Pages 仓库 (Repo C)
+          external_repository: HachGo/HachGo.github.io
+          publish_branch: main
+          publish_dir: ./public
