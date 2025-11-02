@@ -22,7 +22,7 @@ jobs:
       - name: Checkout Repo A (Content)
         uses: actions/checkout@v4
         with:
-          repository: HachGo/blog-content # 您的内容仓库
+          repository: HachGo/hexo-blog-content # 您的内容仓库
           path: ./content-source
 
       - name: Copy Content Files to Hexo Source
