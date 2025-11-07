@@ -71,6 +71,10 @@ jobs:
           echo "✅ Hexo 构建完成，生成的文件列表："
           ls -al ./public || echo "⚠️ 没有生成任何文件，请检查 Hexo 日志"
 
+          echo "🔍 验证关键文件："
+          ls -lh ./public/index.html || echo "❌ index.html 不存在"
+          du -sh ./public/ | head -1
+
       # 8️⃣ 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
@@ -81,4 +85,7 @@ jobs:
           publish_dir: ./public
           force_orphan: true
           keep_files: false
+          publish_branch_force: true
+          cname: godream.show
+          allow_empty_commit: false
           commit_message: "🚀 Deploy from Hexo build: ${{ github.run_number }}"
