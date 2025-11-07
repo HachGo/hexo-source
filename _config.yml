@@ -107,7 +107,6 @@ deploy:
   type: git
   repo: https://github.com/HachGo/HachGo.github.io.git
   branch: main
-  token: $DEPLOY_PAT_NEW
 
 ## 2025-02-03 修改默认渲染器配置 
 markdown:
