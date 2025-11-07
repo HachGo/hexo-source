@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.25.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="install git1sudo apt-get install git  install node.jsinstall node.js with nvminstall nvm nvm github url: https:&#x2F;&#x2F;github.com&#x2F;nvm-sh&#x2F;nvm#installing-and-updating  To install or update nvm, you should run">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Build The Blog With Hexo In Linux">
+<meta property="og:url" content="http://example.com/2025/11/07/Blog-build/index.html">
+<meta property="og:site_name" content="Matrix Dream">
+<meta property="og:description" content="install git1sudo apt-get install git  install node.jsinstall node.js with nvminstall nvm nvm github url: https:&#x2F;&#x2F;github.com&#x2F;nvm-sh&#x2F;nvm#installing-and-updating  To install or update nvm, you should run">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/2023-11-13-21-52-48-image.png">
+<meta property="og:image" content="http://example.com/images/2023-11-26-12-37-29-image.png">
+<meta property="og:image" content="http://example.com/images/2023-11-26-12-41-30-image.png">
+<meta property="article:published_time" content="2025-11-07T12:46:42.669Z">
+<meta property="article:modified_time" content="2025-11-02T04:16:51.904Z">
+<meta property="article:author" content="Eric hery">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/2023-11-13-21-52-48-image.png">
+
+
+<link rel="canonical" href="http://example.com/2025/11/07/Blog-build/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2025/11/07/Blog-build/","path":"2025/11/07/Blog-build/","title":"Build The Blog With Hexo In Linux"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Build The Blog With Hexo In Linux | Matrix Dream</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Matrix Dream</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Chasing dreams, as free as the wind</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#install-git"><span class="nav-number">1.</span> <span class="nav-text">install git</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#install-node-js"><span class="nav-number">2.</span> <span class="nav-text">install node.js</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#install-node-js-with-nvm"><span class="nav-number">2.1.</span> <span class="nav-text">install node.js with nvm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#install-nvm"><span class="nav-number">2.1.1.</span> <span class="nav-text">install nvm</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#install-node-js-with-the-nvm"><span class="nav-number">2.2.</span> <span class="nav-text">install node.js with the nvm</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#install-node-with-the-repo"><span class="nav-number">2.2.1.</span> <span class="nav-text">install node with the repo</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#install-hexo-with-npm"><span class="nav-number">3.</span> <span class="nav-text">install hexo with npm</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#start-the-hexo"><span class="nav-number">4.</span> <span class="nav-text">start the hexo</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#connect-the-github-pages-with-the-local-file"><span class="nav-number">5.</span> <span class="nav-text">connect the github pages with the local file</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#create-the-ssh-key-locally"><span class="nav-number">5.1.</span> <span class="nav-text">create the ssh key locally</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#copy-the-key-in-the-menu"><span class="nav-number">5.2.</span> <span class="nav-text">copy the key in the menu</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#test-it-locally"><span class="nav-number">5.3.</span> <span class="nav-text">test it locally</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#change-the-config-file"><span class="nav-number">6.</span> <span class="nav-text">change the config file</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#other-config"><span class="nav-number">7.</span> <span class="nav-text">other config</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#install-a-extension-in-the-blog-root-directory"><span class="nav-number">7.1.</span> <span class="nav-text">install a extension in the blog root directory</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#add-config-for-my-git"><span class="nav-number">7.2.</span> <span class="nav-text">add config for my git</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#post-the-articles"><span class="nav-number">8.</span> <span class="nav-text">post the articles</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Eric hery</p>
+  <div class="site-description" itemprop="description">This is a path of a man, who is chasing his dream !</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2025/11/07/Blog-build/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Eric hery">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Matrix Dream">
+      <meta itemprop="description" content="This is a path of a man, who is chasing his dream !">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Build The Blog With Hexo In Linux | Matrix Dream">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Build The Blog With Hexo In Linux
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2025-11-07 20:46:42" itemprop="dateCreated datePublished" datetime="2025-11-07T20:46:42+08:00">2025-11-07</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2025-11-02 12:16:51" itemprop="dateModified" datetime="2025-11-02T12:16:51+08:00">2025-11-02</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="install-git"><a href="#install-git" class="headerlink" title="install git"></a>install git</h1><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install git</span><br></pre></td></tr></table></figure>
+
+<h1 id="install-node-js"><a href="#install-node-js" class="headerlink" title="install node.js"></a>install node.js</h1><h2 id="install-node-js-with-nvm"><a href="#install-node-js-with-nvm" class="headerlink" title="install node.js with nvm"></a>install node.js with nvm</h2><h3 id="install-nvm"><a href="#install-nvm" class="headerlink" title="install nvm"></a>install nvm</h3><ul>
+<li>nvm github url: <a target="_blank" rel="noopener" href="https://github.com/nvm-sh/nvm#installing-and-updating">https://github.com/nvm-sh/nvm#installing-and-updating</a></li>
+</ul>
+<p>To <strong>install</strong> or <strong>update</strong> nvm, you should run the <a target="_blank" rel="noopener" href="https://github.com/nvm-sh/nvm/blob/v0.39.5/install.sh">install script</a>. To do that, you may either download and run the script manually, or use the following cURL or Wget command:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget -qO- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.5/install.sh | bash</span><br></pre></td></tr></table></figure>
+
+<p>Running either of the above commands downloads a script and runs it. The script clones the nvm repository to <code>~/.nvm</code>, and attempts to add the source lines from the snippet below to the correct profile file (<code>~/.bash_profile</code>, <code>~/.zshrc</code>, <code>~/.profile</code>, or <code>~/.bashrc</code>).</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">export NVM_DIR=&quot;$([ -z &quot;$&#123;XDG_CONFIG_HOME-&#125;&quot; ] &amp;&amp; printf %s &quot;$&#123;HOME&#125;/.nvm&quot; || printf %s &quot;$&#123;XDG_CONFIG_HOME&#125;/nvm&quot;)&quot;</span><br><span class="line">[ -s &quot;$NVM_DIR/nvm.sh&quot; ] &amp;&amp; \. &quot;$NVM_DIR/nvm.sh&quot; # This loads nvm</span><br></pre></td></tr></table></figure>
+
+<p>result: because of the internet, the net can’t connect the github, so it doesn’t work!</p>
+<h2 id="install-node-js-with-the-nvm"><a href="#install-node-js-with-the-nvm" class="headerlink" title="install node.js with the nvm"></a>install node.js with the nvm</h2><h3 id="install-node-with-the-repo"><a href="#install-node-with-the-repo" class="headerlink" title="install node with the repo"></a>install node with the repo</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get update</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -sL https://deb.nodesource.com/setup_16.x | sudo -E bash -</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install -y nodejs</span><br></pre></td></tr></table></figure>
+
+<h1 id="install-hexo-with-npm"><a href="#install-hexo-with-npm" class="headerlink" title="install hexo with npm"></a>install hexo with npm</h1><p>    first,you need to install npm, but i think it is installed in your linux system. you can check it with the command :</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm -v</span><br></pre></td></tr></table></figure>
+
+<p>later, install the hexo</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+<p>then init the blog at the folder which you choose :</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init /home/eric/website/blog/</span><br></pre></td></tr></table></figure>
+
+<p>install other developed packages </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install # install node_modules</span><br></pre></td></tr></table></figure>
+
+<h1 id="start-the-hexo"><a href="#start-the-hexo" class="headerlink" title="start the hexo"></a>start the hexo</h1><p>input the command :</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo server</span><br></pre></td></tr></table></figure>
+
+<p>unput the url in the brower</p>
+<p><a target="_blank" rel="noopener" href="http://localhost:4000/">http://localhost:4000/</a></p>
+<p>and you will see this !</p>
+<p>it’s so wonderful !!!</p>
+<p><img src="/../images/2023-11-13-21-52-48-image.png"></p>
+<h1 id="connect-the-github-pages-with-the-local-file"><a href="#connect-the-github-pages-with-the-local-file" class="headerlink" title="connect the github pages with the local file"></a>connect the github pages with the local file</h1><h2 id="create-the-ssh-key-locally"><a href="#create-the-ssh-key-locally" class="headerlink" title="create the ssh key locally"></a>create the ssh key locally</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;2717485875@qq.com&quot;</span><br></pre></td></tr></table></figure>
+
+<p>tips: the email address is your account address</p>
+<p><img src="/../images/2023-11-26-12-37-29-image.png"></p>
+<h2 id="copy-the-key-in-the-menu"><a href="#copy-the-key-in-the-menu" class="headerlink" title="copy the key in the menu"></a>copy the key in the menu</h2><p>the menu : Settings-&gt;SSH and GPG keys-&gt;New SSH key-&gt;</p>
+<p>firstly you should copy the key from your local path </p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat ~/.ssh/id_rsa.pub</span><br></pre></td></tr></table></figure>
+
+<p>and then enter the menu </p>
+<p>Settings-&gt;SSH and GPG keys-&gt;New SSH key-&gt;, and copy it in the test space, save it.</p>
+<h2 id="test-it-locally"><a href="#test-it-locally" class="headerlink" title="test it locally"></a>test it locally</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh -T git@github.com</span><br></pre></td></tr></table></figure>
+
+<p>if it works, it will show the comand like tihs ,and show your account name</p>
+<p><img src="/../images/2023-11-26-12-41-30-image.png"></p>
+<h1 id="change-the-config-file"><a href="#change-the-config-file" class="headerlink" title="change the config file"></a>change the config file</h1><p>open the config file in the root directory,open the _config.yml file and write it,</p>
+<figure class="highlight yml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">deploy:</span></span><br><span class="line">  <span class="attr">type:</span> <span class="string">git</span></span><br><span class="line">  <span class="attr">repo:</span> <span class="string">git@github.com:HachGo/HachGo.github.io</span></span><br><span class="line">  <span class="attr">branch:</span> <span class="string">main</span></span><br></pre></td></tr></table></figure>
+
+<p>then save it.</p>
+<h1 id="other-config"><a href="#other-config" class="headerlink" title="other config"></a>other config</h1><h2 id="install-a-extension-in-the-blog-root-directory"><a href="#install-a-extension-in-the-blog-root-directory" class="headerlink" title="install a extension in the blog root directory"></a>install a extension in the blog root directory</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo npm i hexo-deployer-git</span><br></pre></td></tr></table></figure>
+
+<h2 id="add-config-for-my-git"><a href="#add-config-for-my-git" class="headerlink" title="add config for my git"></a>add config for my git</h2><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email &quot;you@example.com&quot;</span><br><span class="line">git config --global user.name &quot;Your Name&quot;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.email &quot;2717485875@qq.com&quot;</span><br><span class="line">git config --global user.name &quot;HachGo&quot;</span><br></pre></td></tr></table></figure>
+
+<h1 id="post-the-articles"><a href="#post-the-articles" class="headerlink" title="post the articles"></a>post the articles</h1><p>firstly write a blog</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo &quot;new post&quot;</span><br></pre></td></tr></table></figure>
+
+<p>then write it and post</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo g</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo deploy</span><br></pre></td></tr></table></figure>
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2025/11/07/hello-world/" rel="prev" title="Hello World">
+                  <i class="fa fa-angle-left"></i> Hello World
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2025/11/07/002_%E6%B5%85%E8%B0%88%E9%A1%B9%E7%9B%AE%E4%B8%8E%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86%E5%B2%97%E4%BD%8D/" rel="next" title="">
+                   <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2025</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Eric hery</span>
+  </div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
