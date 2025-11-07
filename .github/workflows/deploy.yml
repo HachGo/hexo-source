@@ -73,16 +73,12 @@ jobs:
 
       # 8️⃣ 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
-        env:
-          GIT_AUTHOR_NAME: ${{ secrets.GIT_AUTHOR_NAME }}
-          GIT_AUTHOR_EMAIL: ${{ secrets.GIT_AUTHOR_EMAIL }}
-          GIT_COMMITTER_NAME: ${{ secrets.GIT_COMMITTER_NAME }}
-          GIT_COMMITTER_EMAIL: ${{ secrets.GIT_COMMITTER_EMAIL }}
-          DEPLOY_PAT_NEW: ${{ secrets.DEPLOY_PAT_NEW }}
-        run: |
-          echo "🛠️ 配置 Git 用户信息..."
-          git config --global user.name "${GIT_AUTHOR_NAME:-GitHub Actions}"
-          git config --global user.email "${GIT_AUTHOR_EMAIL:-actions@github.com}"
-
-          echo "🚀 开始部署到 GitHub Pages..."
-          npx hexo deploy --token "$DEPLOY_PAT_NEW"
+        uses: peaceiris/actions-gh-pages@v4
+        with:
+          personal_token: ${{ secrets.DEPLOY_PAT_NEW }}
+          external_repository: HachGo/HachGo.github.io
+          publish_branch: main
+          publish_dir: ./public
+          force_orphan: true
+          keep_files: false
+          commit_message: "🚀 Deploy from Hexo build: ${{ github.run_number }}"
