@@ -79,4 +79,5 @@ jobs:
           external_repository: HachGo/HachGo.github.io
           publish_branch: main
           publish_dir: ./public
+          force_orphan: true
           commit_message: "🚀 Deploy from Hexo build: ${{ github.run_number }}"
