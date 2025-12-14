@@ -75,16 +75,12 @@ jobs:
           ls -lh ./public/index.html || echo "❌ index.html 不存在"
           du -sh ./public/ | head -1
 
-      # 8️⃣ 部署到 GitHub Pages
+      # 8️⃣ 部署到 GitHub Pages (SSH Key)
       - name: Deploy to GitHub Pages
-        uses: JamesIves/github-pages-deploy-action@v4
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          repository-token: ${{ secrets.DEPLOY_PAT_NEW }}
-          external-repository: HachGo/HachGo.github.io
-          branch: main
-          folder: public
-          target-folder: ''
-          force: true
-          clean: true
-          clean-exclude: |
-            .nojekyll
+          ssh_key: ${{ secrets.DEPLOY_SSH_KEY }}
+          external_repository: HachGo/HachGo.github.io
+          publish_branch: main
+          publish_dir: ./public
+          force_orphan: true
