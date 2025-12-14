@@ -77,15 +77,14 @@ jobs:
 
       # 8️⃣ 部署到 GitHub Pages
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v4
+        uses: JamesIves/github-pages-deploy-action@v4
         with:
-          personal_token: ${{ secrets.DEPLOY_PAT_NEW }}
-          external_repository: HachGo/HachGo.github.io
-          publish_branch: main
-          publish_dir: ./public
-          force_orphan: true
-          keep_files: false
-          publish_branch_force: true
-          cname: godream.show
-          allow_empty_commit: false
-          commit_message: "🚀 Deploy from Hexo build: ${{ github.run_number }}"
+          repository-token: ${{ secrets.DEPLOY_PAT_NEW }}
+          external-repository: HachGo/HachGo.github.io
+          branch: main
+          folder: public
+          target-folder: ''
+          force: true
+          clean: true
+          clean-exclude: |
+            .nojekyll
